@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Angela Larson"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About Me
+      - href: csv.qmd
+        text: Experience
+      - href: Projects.qmd
+        text: Senior Thesis
+      - href: Rugby.qmd
+        text: Fieldwork
+
+format:
+  html:
+    theme:
+      - sandstone
+      - styles.scss
+    mainfont: Sen
+    toc: true
+    page-layout: full
+
+editor: visual
+

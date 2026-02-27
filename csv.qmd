@@ -1,0 +1,16 @@
+---
+title: "Experience"
+format: html
+---
+
+## Current Research
+
+I have spent the past two years (2023-2025) as an undergraduate researcher in the Iglesias-Rodriguez lab at UC Santa Barbara under Dr. Debora Iglesias-Rodriguez, studying Ocean Alkalinity Enhancement and its potential effect on marine organisms. Currently, I am finishing up a project assessing the growth and calcification of *Emiliania huxleyi* under a brucite-inspired alkalinity addition [See Senior Thesis page](Projects.qmd).
+
+Looking ahead to the future, I will be joining the Sclero Lab at Tulane University to begin my PhD under Dr. Thomas DeCarlo in Fall 2025 where I will continue researching marine calcifiers and climate change, but shifting my focus slightly to study coral reefs and marine heatwaves.
+
+## Past Research
+
+Previously, I have served as an undergraduate researcher under Dr. Adam Lambert assisting in the restoration of a riparian ecosystem along the a section of the Sespe River in Fillmore, CA. Additionally, I completed a week-long mini project assessing the affect of a storm on the physical and chemical characteristics of high elevation and low elevation streams during a research trip with FUERTE.
+
+#### Curious about other work I've done? [Here's a link to my CV (updated September 2025)](/images/Angela_Larson_CV_updatedSept2025.pdf).

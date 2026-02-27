@@ -1,0 +1,29 @@
+---
+title: "Fieldwork"
+format: html
+---
+
+## Oceanographic
+Through FUERTE and local Plumes and Blooms cruises with the Iglesias-Rodriguez lab at UC Santa Barbara, I have had the amazing opportunity to attend day cruises and collect nutrient, carbonate chemistry, and environmental DNA samples using a CTD rosette. Additionally, I was granted an opportunity to serve as an oceanographic field mentor for a day cruise to lead undergraduates through collection of seawater using a 12 L Niskin bottle and subsequent pH analysis in lab.
+
+![This photo was taken in the Santa Barbara Channel on the R/V Shearwater during the local Plumes and Blooms cruise, August 2023.](images/boat.png)
+
+## Geologic
+My enrollment in EARTH 104A - Field Methods in Geology culminated in a quarter long Santa Barbara Field Guide project, mapping the local structural and stratigraphic Santa Barbara geology over the course of six lab periods. Maps were overlain with local Dibblee maps using QGIS and Inkscape for visual editing. Strike and dip measurements were taken using both a Brunton compass and Clino app for IPhone. A hand lens and geologic field notebook was used for mineral identification and grain size determination. Figures and images developed in Inkscape were adapted from *in situ* measurements.
+
+**Interested in reading my Santa Barbara Field Guide? Check out the full project [here](images/104a_guide.pdf)**
+
+#### Interactive Strike and Dip Location Map
+Below is a map of all strike and dip measurements I took for the three mapping projects measured using the Clino app. Specifically, the Ellwood Beach and Camino Cielo Rd mapping measurements are featured in the Santa Barbara Field Guide linked above.
+
+The EARTH 104A course included a four day field trip to the Mojave Desert, where we completed a handwritten mapping project. These measurements were not included in the Santa Barbara Field Guide.
+
+Each pin represents a single strike and dip measurement. When clicked upon, each pin displays the strike and dip measurement in addition to data regarding plane type (bedding or fault) and location. Color represents sedimentary rock formation name and rock type for Santa Barbara and Mojave Desert locations, respectively. 
+
+<div style="margin-top: 2em; overflow: hidden;">
+  <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1rhnMzM5WsfT2rC441702xA-zuFqWYRM&ehbc=2E312F" 
+  width="640" 
+  height="480"></iframe>
+</div>
+
+![This photo was taken at Piute Gorge in the Mojave Desert during our weekend field trip, May 2024.](images/mojave.png)

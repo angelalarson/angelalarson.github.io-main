@@ -1,0 +1,38 @@
+---
+title: "About Me"
+---
+
+## Teaching
+I am quite passionate about teaching and mentorship, taking on multiple roles throughout my time at UC Santa Barbara. I have served as a FUERTE Teaching Assistant, helping younger cohorts in developing research questions and carrying out mini projects. Furthermore, I was a learning assistant for Earth 114 - Geomaterials in Fall 2024, assisting in lab periods with mineral identification and chemistry in addition to holding weekly office hours. As a graduate student at Tulane University, I will continue to grow my skills as an educator as I pursue my ultimate goal of becoming a professor.
+
+::: {layout-ncol="3"}
+
+![FUERTE fellows collecting deployed camera traps at Valentine Eastern Sierra Reserve.](images/fellows1.png){group="about"}
+
+![The green mineral actinolite from Earth 114 lab period.](images/actinolite.png){group="about"}
+
+![Photo taken with a frog in the Hoover Wilderness during a FUERTE field trip, September 2024.](images/frog1.png){group="about"}
+
+:::
+
+## Rugby
+I started playing rugby in my first year at UC Santa Barbara, finding an immediate home on the team and a passion for this amazing sport. When I tore my ACL shortly after joining, I committed myself to strength training and the return-to-play process. In my time off, I began specializing in specific skills such as kicking and quickly earned a starting position on the team once I returned to playing. Two years after my injury, I was selected to represent my division playing for the Pacific South Griffins, a team composed of the top collegiate women's rugby players in Southern California and Arizona. I played in the U23 All Stars tournament in Boston, MA in June 2024, where we placed second in our tier. As I finish up my time playing rugby at UC Santa Barbara, I intend to take up coaching to continue contributing to this amazing community.
+
+::: {layout-ncol="3"}
+![Fending off tackle against University of Arizona, February 2025](images/rugby1.jpg){group="about"}
+
+![Running through deflected tackle against San Diego State Univeristy, February 2025](images/rugby2.jpg){group="about"}
+
+![My UC Santa Barbara teammates and I representing Pacific South (blue and gold) and Central South (red and white) regions at U23 All Star tournament, June 2024](images/rugby3.png){group="about"}
+:::
+
+## Outdoor Education
+In my formative years, I attended Two Sentinels Girl Scout Camp, an outdoor backpacking camp in the Sierra Nevada. Prior to my first year at UC Santa Barbara, I became a camp counselor at Two Sentinels for the first time, sparking my love for outdoor education. Influenced by my experiences, I enrolled in a six month outdoor leadership training course my first year at UC Santa Barbara where I was exposed to a variety of outdoor activities and education. This has ultimately lead to my passion for fieldwork and providing equal opportunities for outdoor education. In many ways, I study earth and environmental sciences because of my outdoor education influences, providing me with an outlet to turn my hobbies and passions into a career.
+
+::: {layout-ncol="3"}
+![My fellow camp counselors and I at Two Sentinels Girl Scout Camp, July 2022](images/camp.png){group="about"}
+
+![Canoe trip for the UC Santa Barbara outdoor leadership training course, November 2021](images/canoe1.png){group="about"}
+
+![Backpacking along a portion of the PCT near Carson Pass, July 2021](images/backpacking.png){group="about"}
+:::

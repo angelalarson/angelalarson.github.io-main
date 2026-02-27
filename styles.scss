@@ -1,0 +1,27 @@
+/*-- scss:defaults --*/
+
+$dark-blue: navy;
+$cream: #FDFBF7;
+$light-blue: aliceblue;
+$med-blue: #c6dbef;
+
+// Base document colors
+$navbar-bg: $med-blue; // navbar
+$navbar-fg: $dark-blue; // navbar foreground elements
+$body-bg: $light-blue; // page background 
+$body-color: $dark-blue; // page text 
+
+$code-bg: $cream; // inline code background color
+$code-color: $dark-blue; // inline code text color
+
+/*-- scss:rules --*/
+
+main {
+  font-size: 20px;
+}
+
+.gallery img {
+  width: 400px;
+  height: auto;
+  margin: 10px;
+}

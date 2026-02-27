@@ -1,0 +1,26 @@
+---
+title: "Angela Larson"
+image: images/front.image.png
+toc: false
+about:
+  template: trestles
+  image-shape: round
+  image-width: 20em
+  links: 
+    - text: GitHub
+      href: https://github.com/angelalarson
+      icon: "github"
+      target: _blank
+---
+
+## About Me!
+
+I am a first year PhD student at Tulane University in the Earth and Environmental Sciences Department, advised by Dr. Thomas DeCarlo. Broadly, I study coral reef microclimates and coral bleaching.
+
+I completed my undergraduate degree at UC Santa Barbara majoring in Earth Science with an emphasis in Climate and Environment. I became highly involved in research early at UC Santa Barbara as a Field-based Undergraduate Engagement through Research, Teaching, and Education (FUERTE) fellow. Beyond my academics, I served as the president of VocalMotion, UCSB Women's A Cappella group, for two years and played on the UCSB Women's Rugby team for four years.
+
+## Education
+
+Tulane University - Earth and Environmental Sciences PhD as a Louisiana Board of Regents/SREB Doctoral Fellow
+
+University of California, Santa Barbara – Earth Science, emphasis in Climate and Environment, B.S. - 2025
