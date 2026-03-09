@@ -7802,7 +7802,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Predicting-Greenhouse-Gas-Emissions-by-State-and-an-Argument-For-Inclusion-of-Environmental-Emissions"><strong>Predicting Greenhouse Gas Emissions by State and an Argument For Inclusion of Environmental Emissions</strong><a class="anchor-link" href="#Predicting-Greenhouse-Gas-Emissions-by-State-and-an-Argument-For-Inclusion-of-Environmental-Emissions">¶</a></h1><h2 id="Presented-as-a-California-Wildfire-Case-Study"><em>Presented as a California Wildfire Case Study</em><a class="anchor-link" href="#Presented-as-a-California-Wildfire-Case-Study">¶</a></h2><h2 id="Angela-Larson">Angela Larson<a class="anchor-link" href="#Angela-Larson">¶</a></h2>
+<h1 id="Sectoral-Drivers-of-Greenhouse-Gas-Emissions-and-the-Growing-Role-of-Wildfires"><strong>Sectoral Drivers of Greenhouse Gas Emissions and the Growing Role of Wildfires</strong><a class="anchor-link" href="#Sectoral-Drivers-of-Greenhouse-Gas-Emissions-and-the-Growing-Role-of-Wildfires">¶</a></h1><h2 id="Presented-as-a-California-Wildfire-Case-Study"><em>Presented as a California Wildfire Case Study</em><a class="anchor-link" href="#Presented-as-a-California-Wildfire-Case-Study">¶</a></h2><h2 id="Angela-Larson">Angela Larson<a class="anchor-link" href="#Angela-Larson">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7826,13 +7826,1796 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Project Goal:</strong></p>
-<p>First, I aim to compare emissions across states and observe overall changes in emissions since 1990 through time series analysis, then compare year-to-year shifting trends in emission sectors (ie., agriculture, energy, and more). I want to discover which sectors drive emissions in each state then use this to predict future state emissions.</p>
-<p>Then, I want to specifically observe California state emissions and wildfire emissions. I will create two models; one to predict California emissions from anthropogenic sectors and second to predict anthropogenic emissions with wildfire emissions. I aim to argue that by not including environmental emissions from the more frequent and devastating natural disasters such as wildfires in recent years reduces the urgency of emissions reductions as we are not considering the loss of a large carbon reserve.</p>
+<p>This project analyzes greenhouse gas emissions across U.S. states and territories using historical emissions inventories and wildfire emissions data. First, I aim to explore long-term trends in emissions across states between 1990 and 2022. Using time-series analysis, I will compare changes in total emissions over time and compare trends across emission sectors such as transportation, energy, and agriculture. I will also identify which sectors drive emissions in each state then use this to predict future state emissions. These analyses will provide a baseline understanding of the major drivers of greenhouse gas emissions across the United States.</p>
+<p>Then, I want to specifically observe California state emissions and wildfire emissions. Despite wildfire emissions being included in each state greenhouse gas inventory, the use of a separate wildfire dataset provides event-level information such as acres burned and emissions per fire. I will compare wildfire emissions against other major emission sectors in California to better understand their relative contribution to total emissions. I intend to use a Random Forest regression model to predict total California emissions using historical anthropogenic sector emissions and wildfire activity indicators. By comparing model predictions using anthropogenic emissions alone versus models that incorporate wildfire emissions and fire activity metrics, I aim to demonstrate how wildfire activity is increasingly contributing to California greenhouse gas emissions variability.</p>
 <p><strong>Description of Datasets:</strong></p>
-<p>The first dataset I will be using includes all state greenhouse gas emissions, grouped by greenhouse gas and emission sector. This dataset ranges from years 1990-2022.</p>
+<p>The first dataset I will be using includes individual state and U.S. territory greenhouse gas emissions, grouped by greenhouse gas (Tg) and economic sector. These data range from years 1990-2022. Each row represents one greenhouse gas emission per year includes economic sector and subsectors, UNFCCC-IPCC sector and subsectors, carbon pool, fuel type, greenhouse gas type, and emission per year. This extensive dataset uses governmental language and is meant to inform emissions policies.</p>
+<p>State greenhouse gas emissions data:
+U.S. Environmental Protection Agency (EPA) State Greenhouse Gas Inventory
+<a href="https://www.epa.gov/ghgemissions/inventory-us-greenhouse-gas-emissions-and-sinks">https://www.epa.gov/ghgemissions/inventory-us-greenhouse-gas-emissions-and-sinks</a></p>
 <p>The second dataset I will be using is California wildfire emissions data between the years of 2015-2024, compilied by the California Air Resources Board (CARB). Each row represents one wildfire event, represented by a unique wildfire ID and presents data on the number of acres burned, emissions, and fuel consumption data in addition to emissions per individual greenhouse gas (tons). These data are meant to support public knowledge of wildfire emissions and air quality risk.</p>
-<p>One question I aim to answer is how wildfire emission trends and industry emission trends differ with the aim to argue the significance of environmental emissions in the context of greenhouse gas emission counting. To do so, I will observe emissions trends in 2020/21, where production emissions will likely be decreased due to the COVID-19 pandemic but wildfire emissions will likely be increased due to particularly tragic drought years in California.</p>
-<p>While the all-state greenhouse gas emissions dataset includes a large breadth of data, the wildfire dataset is limited by its lack of national relevancy as who produced this dataset is the California-specific government sector California Air Resources Board. There is no standardized wildfire dataset to be found for each individual state, nor does this dataset exceed ten years worth of data. This has limited the depth of this data analysis.</p>
+<p>California wildfire emissions data:
+California Air Resources Board (CARB) Wildfire Emissions Inventory
+<a href="https://ww2.arb.ca.gov/ghg-inventory-data">https://ww2.arb.ca.gov/ghg-inventory-data</a></p>
+<p>One question I aim to answer is how wildfire emission trends and industry emission trends differ. To do so, I will observe emissions trends in 2020/21, where production emissions will likely be decreased due to the COVID-19 pandemic but wildfire emissions will likely be increased due to particularly tragic drought years in California through time series analysis.</p>
+<p>While the all-state greenhouse gas emissions dataset includes a large breadth of data, the wildfire dataset is limited by its lack of national relevancy as who produced this dataset is the California-specific government sector California Air Resources Board. There is no standardized wildfire dataset to be found for each individual state, nor does this dataset exceed ten years worth of data. This has limited the depth of this data analysis and reproducibility per state.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [60]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">'/content/drive'</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"/content/drive/MyDrive/cmps_project/"</span><span class="p">)</span> <span class="c1"># changing file path to project folder</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [61]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># import required packages</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [62]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># load greenhouse gas dataset</span>
+<span class="n">ghg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">"AllStateGHGData90-22_v082924.csv"</span><span class="p">)</span>
+
+<span class="c1"># load wildfire emissions dataset</span>
+<span class="n">fires</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"Wildfire-Veg_EmissInv_2015-2024_Summary.csv"</span><span class="p">)</span>
+
+<span class="c1"># display beginning rows</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ghg</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">fires</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>/tmp/ipykernel_555/1544838143.py:2: DtypeWarning: Columns (8,9,10) have mixed types. Specify dtype option on import or set low_memory=False.
+  ghg = pd.read_csv(
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="colab-df-container" id="df-b05bec02-065d-41ec-a9f6-d849f9e82f15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>sector</th>
+<th>subsector</th>
+<th>category</th>
+<th>sub_category_1</th>
+<th>sub_category_2</th>
+<th>sub_category_3</th>
+<th>sub_category_4</th>
+<th>sub_category_5</th>
+<th>carbon_pool</th>
+<th>fuel1</th>
+<th>...</th>
+<th>Y2013</th>
+<th>Y2014</th>
+<th>Y2015</th>
+<th>Y2016</th>
+<th>Y2017</th>
+<th>Y2018</th>
+<th>Y2019</th>
+<th>Y2020</th>
+<th>Y2021</th>
+<th>Y2022</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>0.005047</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>0.002264</td>
+<td>0.002704</td>
+<td>0.003249</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<p>5 rows × 49 columns</p>
+</div>
+<div class="colab-df-buttons">
+<div class="colab-df-container">
+<button class="colab-df-convert" onclick="convertToInteractive('df-b05bec02-065d-41ec-a9f6-d849f9e82f15')" style="display:none;" title="Convert this dataframe to an interactive table.">
+<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
+<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+</svg>
+</button>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<script>
+      const buttonEl =
+        document.querySelector('#df-b05bec02-065d-41ec-a9f6-d849f9e82f15 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-b05bec02-065d-41ec-a9f6-d849f9e82f15');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="colab-df-container" id="df-f3dd264b-8e48-4ac6-9bff-f44bd7a0eb45">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Year</th>
+<th>Fire ID</th>
+<th>Fire\nType</th>
+<th>Start\nDate</th>
+<th>End\nDate</th>
+<th>Acres\nBurned</th>
+<th>Total Fuels\nConsumed (tons)</th>
+<th>TOG\n(tons)</th>
+<th>TNMHC\n(tons)</th>
+<th>NO2\n(tons)</th>
+<th>SO2\n(tons)</th>
+<th>CO\n(tons)</th>
+<th>PM10\n(tons)</th>
+<th>PM2.5\n(tons)</th>
+<th>NH3\n(tons)</th>
+<th>CO2\n(tons)</th>
+<th>CH4\n(tons)</th>
+<th>N2O\n(tons)</th>
+<th>Involved Counties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2015</td>
+<td>TANNER_objectid_3888</td>
+<td>suppression</td>
+<td>1/23/15</td>
+<td>1/24/15</td>
+<td>45.626</td>
+<td>901.527</td>
+<td>41.314</td>
+<td>12.394</td>
+<td>1.396</td>
+<td>0.851</td>
+<td>177.059</td>
+<td>30.656</td>
+<td>25.987</td>
+<td>1.771</td>
+<td>1332.413</td>
+<td>8.263</td>
+<td>0.186</td>
+<td>Placer</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2015</td>
+<td>MCOULLOH_objectid_3898</td>
+<td>suppression</td>
+<td>1/24/15</td>
+<td>3/1/15</td>
+<td>36.250</td>
+<td>737.680</td>
+<td>33.652</td>
+<td>9.982</td>
+<td>1.180</td>
+<td>0.673</td>
+<td>142.605</td>
+<td>25.042</td>
+<td>21.223</td>
+<td>1.426</td>
+<td>1095.129</td>
+<td>6.843</td>
+<td>0.153</td>
+<td>Placer</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2015</td>
+<td>SPRING-GARDEN_objectid_3948</td>
+<td>suppression</td>
+<td>2/6/15</td>
+<td>2/6/15</td>
+<td>16.012</td>
+<td>177.126</td>
+<td>7.755</td>
+<td>2.380</td>
+<td>0.287</td>
+<td>0.177</td>
+<td>34.000</td>
+<td>5.848</td>
+<td>4.961</td>
+<td>0.340</td>
+<td>263.033</td>
+<td>1.497</td>
+<td>0.037</td>
+<td>Plumas</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2015</td>
+<td>VAN-DYKE_000107</td>
+<td>suppression</td>
+<td>2/6/15</td>
+<td>2/13/15</td>
+<td>519.291</td>
+<td>1403.665</td>
+<td>46.451</td>
+<td>13.523</td>
+<td>3.402</td>
+<td>1.117</td>
+<td>193.179</td>
+<td>32.288</td>
+<td>27.368</td>
+<td>1.932</td>
+<td>2211.655</td>
+<td>9.703</td>
+<td>0.308</td>
+<td>Mono</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2015</td>
+<td>ROUND_001662</td>
+<td>suppression</td>
+<td>2/7/15</td>
+<td>2/9/15</td>
+<td>6549.296</td>
+<td>17686.986</td>
+<td>672.723</td>
+<td>200.511</td>
+<td>36.844</td>
+<td>16.054</td>
+<td>2864.439</td>
+<td>479.356</td>
+<td>406.712</td>
+<td>28.644</td>
+<td>27138.610</td>
+<td>135.851</td>
+<td>3.783</td>
+<td>Inyo, Mono</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="colab-df-buttons">
+<div class="colab-df-container">
+<button class="colab-df-convert" onclick="convertToInteractive('df-f3dd264b-8e48-4ac6-9bff-f44bd7a0eb45')" style="display:none;" title="Convert this dataframe to an interactive table.">
+<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
+<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+</svg>
+</button>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<script>
+      const buttonEl =
+        document.querySelector('#df-f3dd264b-8e48-4ac6-9bff-f44bd7a0eb45 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f3dd264b-8e48-4ac6-9bff-f44bd7a0eb45');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># find all year columns</span>
+<span class="n">year_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ghg</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'Y'</span><span class="p">)]</span>
+
+<span class="c1"># tidy data</span>
+<span class="n">ghg_long</span> <span class="o">=</span> <span class="n">ghg</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
+    <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">'geo_ref'</span><span class="p">,</span>
+        <span class="s1">'ghg'</span><span class="p">,</span>
+        <span class="s1">'ghg_category'</span><span class="p">,</span>
+        <span class="s1">'sector'</span><span class="p">,</span>
+        <span class="s1">'subsector'</span><span class="p">,</span>
+        <span class="s1">'category'</span><span class="p">,</span>
+        <span class="s1">'sub_category_1'</span><span class="p">,</span>
+        <span class="s1">'fuel1'</span><span class="p">,</span>
+        <span class="s1">'fuel2'</span>
+    <span class="p">],</span>
+    <span class="n">value_vars</span><span class="o">=</span><span class="n">year_cols</span><span class="p">,</span>
+    <span class="n">var_name</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span>
+    <span class="n">value_name</span><span class="o">=</span><span class="s1">'emissions_Tg'</span>
+<span class="p">)</span>
+
+<span class="c1"># clean year</span>
+<span class="n">ghg_long</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'Y'</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># convert 0 emissions to NaN</span>
+<span class="n">ghg_long</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="c1"># filter for CO2 only</span>
+<span class="n">ghg_long</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="n">ghg_long</span><span class="p">[</span><span class="s1">'ghg'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Carbon Dioxide'</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">ghg_long</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ghg_long</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="colab-df-container" id="df-ccb7c33e-9d1f-42a1-92ff-ebdba6a7968b">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>geo_ref</th>
+<th>ghg</th>
+<th>ghg_category</th>
+<th>sector</th>
+<th>subsector</th>
+<th>category</th>
+<th>sub_category_1</th>
+<th>fuel1</th>
+<th>fuel2</th>
+<th>year</th>
+<th>emissions_Tg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>AK</td>
+<td>Carbon Dioxide</td>
+<td>CO2</td>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1990</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>1</th>
+<td>AL</td>
+<td>Carbon Dioxide</td>
+<td>CO2</td>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1990</td>
+<td>0.010937</td>
+</tr>
+<tr>
+<th>2</th>
+<td>AR</td>
+<td>Carbon Dioxide</td>
+<td>CO2</td>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1990</td>
+<td>0.005945</td>
+</tr>
+<tr>
+<th>3</th>
+<td>AS</td>
+<td>Carbon Dioxide</td>
+<td>CO2</td>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1990</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>4</th>
+<td>AZ</td>
+<td>Carbon Dioxide</td>
+<td>CO2</td>
+<td>Agriculture</td>
+<td>CO2 Emissions from Liming, Urea Application an...</td>
+<td>Liming</td>
+<td>Dolomite</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1990</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="colab-df-buttons">
+<div class="colab-df-container">
+<button class="colab-df-convert" onclick="convertToInteractive('df-ccb7c33e-9d1f-42a1-92ff-ebdba6a7968b')" style="display:none;" title="Convert this dataframe to an interactive table.">
+<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
+<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+</svg>
+</button>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<script>
+      const buttonEl =
+        document.querySelector('#df-ccb7c33e-9d1f-42a1-92ff-ebdba6a7968b button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-ccb7c33e-9d1f-42a1-92ff-ebdba6a7968b');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>geo_ref</th>
+<td>object</td>
+</tr>
+<tr>
+<th>ghg</th>
+<td>object</td>
+</tr>
+<tr>
+<th>ghg_category</th>
+<td>object</td>
+</tr>
+<tr>
+<th>sector</th>
+<td>object</td>
+</tr>
+<tr>
+<th>subsector</th>
+<td>object</td>
+</tr>
+<tr>
+<th>category</th>
+<td>object</td>
+</tr>
+<tr>
+<th>sub_category_1</th>
+<td>object</td>
+</tr>
+<tr>
+<th>fuel1</th>
+<td>object</td>
+</tr>
+<tr>
+<th>fuel2</th>
+<td>object</td>
+</tr>
+<tr>
+<th>year</th>
+<td>int64</td>
+</tr>
+<tr>
+<th>emissions_Tg</th>
+<td>float64</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> object</label>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># highest emission states ranked</span>
+<span class="n">state_year</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'geo_ref'</span><span class="p">,</span><span class="s1">'year'</span><span class="p">]</span>
+<span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># group dataset by state, select emissions and greenhouse gas, and sort the values from most to least</span>
+<span class="n">state_rank</span> <span class="o">=</span> <span class="n">state_year</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'geo_ref'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># display beginning rows</span>
+<span class="n">state_rank</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[84]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>emissions_Tg</th>
+</tr>
+<tr>
+<th>geo_ref</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>TX</th>
+<td>633.235314</td>
+</tr>
+<tr>
+<th>CA</th>
+<td>353.892556</td>
+</tr>
+<tr>
+<th>FL</th>
+<td>237.544075</td>
+</tr>
+<tr>
+<th>OH</th>
+<td>234.440988</td>
+</tr>
+<tr>
+<th>PA</th>
+<td>229.824848</td>
+</tr>
+<tr>
+<th>IL</th>
+<td>212.023529</td>
+</tr>
+<tr>
+<th>IN</th>
+<td>206.093024</td>
+</tr>
+<tr>
+<th>LA</th>
+<td>181.803881</td>
+</tr>
+<tr>
+<th>MI</th>
+<td>171.820216</td>
+</tr>
+<tr>
+<th>NY</th>
+<td>165.820525</td>
+</tr>
+<tr>
+<th>GA</th>
+<td>132.767482</td>
+</tr>
+<tr>
+<th>KY</th>
+<td>114.822452</td>
+</tr>
+<tr>
+<th>NJ</th>
+<td>111.959519</td>
+</tr>
+<tr>
+<th>MO</th>
+<td>108.882201</td>
+</tr>
+<tr>
+<th>NC</th>
+<td>104.850950</td>
+</tr>
+<tr>
+<th>CO</th>
+<td>97.896852</td>
+</tr>
+<tr>
+<th>MN</th>
+<td>94.498988</td>
+</tr>
+<tr>
+<th>AZ</th>
+<td>93.860350</td>
+</tr>
+<tr>
+<th>AL</th>
+<td>90.993667</td>
+</tr>
+<tr>
+<th>OK</th>
+<td>88.593285</td>
+</tr>
+<tr>
+<th>WI</th>
+<td>87.499441</td>
+</tr>
+<tr>
+<th>TN</th>
+<td>81.556798</td>
+</tr>
+<tr>
+<th>VA</th>
+<td>76.552967</td>
+</tr>
+<tr>
+<th>WV</th>
+<td>76.174229</td>
+</tr>
+<tr>
+<th>MA</th>
+<td>73.683606</td>
+</tr>
+<tr>
+<th>WY</th>
+<td>70.070872</td>
+</tr>
+<tr>
+<th>WA</th>
+<td>68.695723</td>
+</tr>
+<tr>
+<th>MD</th>
+<td>67.600836</td>
+</tr>
+<tr>
+<th>IA</th>
+<td>67.378750</td>
+</tr>
+<tr>
+<th>UT</th>
+<td>66.310219</td>
+</tr>
+<tr>
+<th>NM</th>
+<td>65.089373</td>
+</tr>
+<tr>
+<th>SC</th>
+<td>64.493909</td>
+</tr>
+<tr>
+<th>KS</th>
+<td>64.407435</td>
+</tr>
+<tr>
+<th>ND</th>
+<td>54.324185</td>
+</tr>
+<tr>
+<th>MT</th>
+<td>50.556325</td>
+</tr>
+<tr>
+<th>NV</th>
+<td>41.821616</td>
+</tr>
+<tr>
+<th>NE</th>
+<td>39.900263</td>
+</tr>
+<tr>
+<th>CT</th>
+<td>37.956446</td>
+</tr>
+<tr>
+<th>AR</th>
+<td>29.924959</td>
+</tr>
+<tr>
+<th>AK</th>
+<td>26.151528</td>
+</tr>
+<tr>
+<th>PR</th>
+<td>24.368859</td>
+</tr>
+<tr>
+<th>HI</th>
+<td>16.819626</td>
+</tr>
+<tr>
+<th>ID</th>
+<td>16.065995</td>
+</tr>
+<tr>
+<th>DE</th>
+<td>15.425599</td>
+</tr>
+<tr>
+<th>SD</th>
+<td>14.874273</td>
+</tr>
+<tr>
+<th>ME</th>
+<td>13.099899</td>
+</tr>
+<tr>
+<th>NH</th>
+<td>11.849558</td>
+</tr>
+<tr>
+<th>RI</th>
+<td>10.995189</td>
+</tr>
+<tr>
+<th>VI</th>
+<td>4.773236</td>
+</tr>
+<tr>
+<th>DC</th>
+<td>3.908768</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> float64</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>By ranking the states by average CO2 emissions between 1992 to 2022, I gain a better understanding of the biggest emitters in the country. This provides me with context for when completing future analyis in conjunction with the wildfire dataset to the state specific contributions and relative differences between them. Texas is number one, just above California (CA). Given the larger population and dwindling down of CA natural carbon stock, I wouldn't have expected this; however, Texas has a large oil and gas industry so the large emissions can likely be attributed to this.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [85]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># emission change since 1990 per state</span>
+<span class="n">emissions_1990</span> <span class="o">=</span> <span class="n">state_year</span><span class="p">[</span><span class="n">state_year</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1990</span><span class="p">]</span>
+<span class="n">emissions_recent</span> <span class="o">=</span> <span class="n">state_year</span><span class="p">[</span><span class="n">state_year</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2022</span><span class="p">]</span>
+
+<span class="c1"># calculate change in emissions</span>
+<span class="n">delta_emission</span> <span class="o">=</span> <span class="n">emissions_recent</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'geo_ref'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span> <span class="o">-</span> <span class="n">emissions_1990</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'geo_ref'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span>
+
+<span class="c1"># rank largest change in emissions descending</span>
+<span class="n">display</span><span class="p">(</span><span class="n">delta_emission</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">delta_emission</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>emissions_Tg</th>
+</tr>
+<tr>
+<th>geo_ref</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>TX</th>
+<td>133.765261</td>
+</tr>
+<tr>
+<th>FL</th>
+<td>52.878320</td>
+</tr>
+<tr>
+<th>AK</th>
+<td>36.511895</td>
+</tr>
+<tr>
+<th>AR</th>
+<td>31.653348</td>
+</tr>
+<tr>
+<th>National</th>
+<td>30.947326</td>
+</tr>
+<tr>
+<th>CO</th>
+<td>26.818079</td>
+</tr>
+<tr>
+<th>MS</th>
+<td>22.616880</td>
+</tr>
+<tr>
+<th>AZ</th>
+<td>20.840538</td>
+</tr>
+<tr>
+<th>MO</th>
+<td>18.906296</td>
+</tr>
+<tr>
+<th>MN</th>
+<td>14.985571</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> float64</label>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>emissions_Tg</th>
+</tr>
+<tr>
+<th>geo_ref</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>MD</th>
+<td>-17.552479</td>
+</tr>
+<tr>
+<th>WV</th>
+<td>-17.835779</td>
+</tr>
+<tr>
+<th>IL</th>
+<td>-20.474443</td>
+</tr>
+<tr>
+<th>MA</th>
+<td>-27.091614</td>
+</tr>
+<tr>
+<th>MI</th>
+<td>-28.589308</td>
+</tr>
+<tr>
+<th>PA</th>
+<td>-33.012370</td>
+</tr>
+<tr>
+<th>NY</th>
+<td>-37.507267</td>
+</tr>
+<tr>
+<th>CA</th>
+<td>-37.889885</td>
+</tr>
+<tr>
+<th>IN</th>
+<td>-46.142872</td>
+</tr>
+<tr>
+<th>OH</th>
+<td>-54.682378</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> float64</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Initial exploration of this dataset includes change in emissions between 1990 and 2022 for time series analysis.
+The states and territories that show decreases in emissions could reflect changes in policy or positive land use that increased carbon sinks, but more likely reflect a lack of emission accounting in earlier years. This provides me with context on how to better handle the data (ie, accounting for NaN values and only including specific years where all states are reflected).</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [105]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># sector contributions nationally</span>
+<span class="n">sector_national</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'sector'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sector_national</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>emissions_Tg</th>
+</tr>
+<tr>
+<th>sector</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Agriculture</th>
+<td>256.346786</td>
+</tr>
+<tr>
+<th>Energy</th>
+<td>176107.484617</td>
+</tr>
+<tr>
+<th>Energy-Excluded</th>
+<td>12528.757357</td>
+</tr>
+<tr>
+<th>Industrial Processes and Product Use</th>
+<td>6306.088915</td>
+</tr>
+<tr>
+<th>Land Use, Land-Use Change and Forestry</th>
+<td>-32846.706024</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> float64</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This provides great context as to which sectors result in the highest carbon dioxide emissions across the broader U.S. and compels me to look closer at certain sectors such as 'Land Use, Land-Use Change and Forestry' as it is negative. These values being negative is logical given that this includes carbon dioxide exchange in healthy forests.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [118]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># and by state</span>
+<span class="n">sector_state</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+<span class="p">[</span><span class="s1">'geo_ref'</span><span class="p">,</span><span class="s1">'sector'</span><span class="p">]</span>
+<span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">dominant_sector_state</span> <span class="o">=</span> <span class="n">sector_state</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">sector_state</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'geo_ref'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="p">]</span>
+<span class="n">sector_counts</span> <span class="o">=</span> <span class="n">dominant_sector</span><span class="p">[</span><span class="s1">'sector'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sector_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>count</th>
+</tr>
+<tr>
+<th>sector</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Energy</th>
+<td>57</td>
+</tr>
+<tr>
+<th>Industrial Processes and Product Use</th>
+<td>3</td>
+</tr>
+<tr>
+<th>Agriculture</th>
+<td>2</td>
+</tr>
+<tr>
+<th>Land Use, Land-Use Change and Forestry</th>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div><br/><label><b>dtype:</b> int64</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This builds on the previous code chunk, specifically creating counts of top emission sectors in every state and territory, preparing it to be visualized.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [133]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># plot the sector counts</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">sector_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">sector_counts</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Number of States"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Sector"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Dominant Carbon Dioxide Emission Sector by State"</span><span class="p">)</span>
+
+<span class="c1"># add value labels</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="c1"># arrange number label location</span>
+             <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+             <span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">),</span>
+             <span class="n">va</span><span class="o">=</span><span class="s1">'center'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img alt="No description has been provided for this image" class="" src="data:image/png;base64,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eJUvX16enp6aNGmSxo8fr7feekvly5fX+++/rxYtWuiHH35QeHi4EhMTVatWLT3wwANaunSpgoODtWPHDiUnJ0uSNmzYoA4dOmjy5MmqUaOGjhw5om7dukmShg4dqgULFmjChAmaM2eOIiMjdfr0ae3cuVOStG3bNvXq1Usffvihqlatqt9//10bNmywao2NjdVHH32k6dOnKzw8XOvXr9eTTz6pwMBA1apVS4MHD9bevXv15ZdfKm/evDp8+LD++OOPdLfHpUuX1LdvX0VFRSkxMVFDhgzRI488ori4OLm4/P+/YQ0aNEjjxo1TeHi4Bg0apJiYGB0+fFhubm7asmWLOnfurNjYWLVq1UrLly/X0KFDs2TfDBs2TKNHj9bEiRPl5uamRYsW6fnnn9fEiRNVv359LVu2TE8//bTy58+vOnXqZNlxHRcXp3r16umZZ57RpEmT5ObmpjVr1igpKUmTJk3SwYMHVbp0aY0YMUKSFBgYeMfLSBEfH6+YmBiNGTNGjzzyiC5evKgNGzbIGCNJ+vjjjzVkyBBNmTJF5cuX1/fff6+uXbvKx8dHHTt2zPRys9vu3btVpUoV/fnnn/L19dWiRYtUqlSp7C4LAAAAt0HovklUVJQVfsLDwzVlyhStXr1aDRo00KpVq7R//36tWLFCoaGhkqRRo0bd8TXVJ06cUJs2bVSmTBlJUpEiRaxxuXPnliTly5cv1U21wsPDNWbMmFu2/fLLL1v/LlSokPr166c5c+ZkOnSfP39er7zyinx9fVWpUiUrjPbu3VutW7e2phs3bpwGDBigxx9/XJL02muvac2aNZo4caLefPNNffLJJ/r111+1detWax2LFStmzT98+HC99NJLViAqUqSIXnnlFb344osaOnSoTpw4oeDgYNWvX185cuRQwYIFValSJUk3tqePj48efvhh5cyZU2FhYSpfvrwk6cqVKxo1apRWrVpl9QgWKVJE33zzjd566y3VqlVLJ06cUPny5VWhQgVru91KmzZtnN6///77CgwM1N69e1W6dGlreL9+/dSsWTNr/SIjI3X48GGVKFFCkyZNUuPGja39Urx4cW3atCnV2QG3cvnyZb388stydXVVrVq1rOFPPPGEnn76aet9TEyMOnXqpOeee06S1LdvX3377bcaN26c6tSpk2XH9ZgxY1ShQgWnHuXIyEjr3+7u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rPG1a9dWz5491bt3b+XNm1eNGjWSJC1dulTh4eHy9PRUnTp1NGvWLDkcDp0/f16XLl2Sn5+f5s+f77SsxYsXy8fHRxcvXrR5qwAAAOBucOjQIYWGhqpIkSJq3769Tpw4keZ027dvV1xcnDp37mxrPYRuAFlu+PDhatu2rXbt2qWmTZuqffv2+v333yVJ58+fV926dVW+fHlt27ZNy5cv1y+//KK2bds6tTFr1iy5u7tr48aNmj59uo4ePapHH31UrVq10s6dO9W9e3cNGjTImt7Hx0ePP/54qh74GTNm6NFHH1XOnDntX3EAAABkq8qVK2vmzJlavny5pk2bpqNHj6pGjRppdsC89957KlmypKpWrWprTZxeDuCOLVu2LNUpOP/73//0v//9T9KN675jYmIkSaNGjdLkyZP13XffqXHjxpoyZYrKly+vUaNGWfO+//77KlCggA4ePKjixYtLksLDwzVmzBhrmpdeekkREREaO3asJCkiIkJ79uzRyJEjrWm6dOmiqlWrKj4+XiEhITpz5oy++OILrVq1Kt11uXLliq5cuWK9v3DhQmY3CwAAALLZzddmR0VFqXLlygoLC9O8efOcerT/+OMPffLJJxo8eLDtNRG6AdyxOnXqaNq0aU7DcufObf07KirK+rePj4/8/Px05swZSdLOnTu1Zs2aNK+bOXLkiBW6o6OjncYdOHBAFStWdBpWqVKlVO8jIyM1a9YsvfTSS/roo48UFhammjVrprsusbGxGj58+K1WFwAAAPeogIAAFS9eXIcPH3YaPn/+fF2+fFkdOnSwvQZOLwdwx3x8fFSsWDGn182hO0eOHE7TOxwOJScnS5ISExPVvHlzxcXFOb0OHTrkFI59fHwyVVuXLl00c+ZMSTdOLX/66aflcDjSnX7gwIFKSEiwXidPnszUcgEAAHD3SUxM1JEjRxQSEuI0/L333lOLFi0UGBhoew30dAP4Rz344INasGCBChUqJDe3jH8FRURE6IsvvnAatnXr1lTTPfnkk3rxxRc1efJk7d27Vx07drxlux4eHrbeeR0AAAD/nH79+ql58+YKCwvTqVOnNHToULm6ulqXPkrS4cOHtX79+lS/Le1CTzeAO3blyhWdPn3a6XXz3cdvpUePHvr9998VExOjrVu36siRI1qxYoWefvppJSUlpTtf9+7dtX//fg0YMEAH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du2a034rUaKEChYsyH67CyQlJWnOnDm6dOmSqlSpwv66y/Xo0UPNmjVz2j8Sn7O72aFDhxQaGqoiRYqoffv2OnHihCT22f3ILbsLAIC7wW+//aakpCQFBQU5DQ8KCtL+/fuzqSpk1OnTpyUpzf2XMg7ZKzk5Wb1791a1atVUunRpSTf2m7u7uwICApymZb9lr927d6tKlSr6888/5evrq0WLFqlUqVKKi4tjf92l5syZox07dmjr1q2pxvE5uztVrlxZM2fOVEREhOLj4zV8+HDVqFFDe/bsYZ/dhwjdAADAdj169NCePXucrlnE3SkiIkJxcXFKSEjQ/Pnz1bFjR61bty67y0I6Tp48qeeff14rV66Up6dndpeDDGrSpIn176ioKFWuXFlhYWGaN2+evLy8srEy2IHTywFAUt68eeXq6prqzqC//PKLgoODs6kqZFTKPmL/3Z169uypZcuWac2aNcqfP781PDg4WFevXtX58+edpme/ZS93d3cVK1ZM0dHRio2NVdmyZTVp0iT2111q+/btOnPmjB588EG5ubnJzc1N69at0+TJk+Xm5qagoCD22z0gICBAxYsX1+HDh/ms3YcI3QCgGz8yo6OjtXr1amtYcnKyVq9erSpVqmRjZciIwoULKzg42Gn/XbhwQVu2bGH/ZSNjjHr27KlFixbp66+/VuHChZ3GR0dHK0eOHE777cCBAzpx4gT77S6SnJysK1eusL/uUvXq1dPu3bsVFxdnvSpUqKD27dtb/2a/3f0SExN15MgRhYSE8Fm7D3F6OQD8n759+6pjx46qUKGCKlWqpIkTJ+rSpUt6+umns7s06MYPksOHD1vvjx49qri4OOXOnVsFCxZU79699eqrryo8PFyFCxfW4MGDFRoaqlatWmVf0f9yPXr00CeffKIlS5YoZ86c1rWI/v7+8vLykr+/vzp37qy+ffsqd+7c8vPz03//+19VqVJFDz30UDZX/+80cOBANWnSRAULFtTFixf1ySefaO3atVqxYgX76y6VM2dO6z4JKXx8fJQnTx5rOPvt7tOvXz81b95cYWFhOnXqlIYOHSpXV1fFxMTwWbsPEboB4P+0a9dOv/76q4YMGaLTp0+rXLlyWr58eaqbcyF7bNu2TXXq1LHe9+3bV5LUsWNHzZw5Uy+++KIuXbqkbt266fz586pevbqWL1/ONY7Z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
+"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This visualization is useful for exploring where the majority of carbon dioxide emissions lie within each state and territory. We see an abundance of energy-dominated emission states and territories, informing an anthropogenic baseline of sorts as to what are emission drivers across the country.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [146]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># filtering for California first, then group by sector</span>
+<span class="n">sector_state</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="n">ghg_long</span><span class="p">[</span><span class="s1">'geo_ref'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'CA'</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'geo_ref'</span><span class="p">,</span> <span class="s1">'sector'</span><span class="p">]</span>
+<span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># find dominant sector</span>
+<span class="n">dominant_sector_state</span> <span class="o">=</span> <span class="n">sector_state</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">[</span><span class="n">sector_state</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+<span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">dominant_sector_state</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="colab-df-container" id="df-d6376d0d-5d1c-4596-aa66-72d8c1624bb2">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>geo_ref</th>
+<th>sector</th>
+<th>emissions_Tg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1</th>
+<td>CA</td>
+<td>Energy</td>
+<td>11392.693052</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="colab-df-buttons">
+<div class="colab-df-container">
+<button class="colab-df-convert" onclick="convertToInteractive('df-d6376d0d-5d1c-4596-aa66-72d8c1624bb2')" style="display:none;" title="Convert this dataframe to an interactive table.">
+<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
+<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+</svg>
+</button>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<script>
+      const buttonEl =
+        document.querySelector('#df-d6376d0d-5d1c-4596-aa66-72d8c1624bb2 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-d6376d0d-5d1c-4596-aa66-72d8c1624bb2');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+</div>
+<div id="id_353839a1-f201-4f05-a7e0-d06073dd3f43">
+<style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+<button class="colab-df-generate" onclick="generateWithVariable('dominant_sector_state')" style="display:none;" title="Generate code using this dataframe.">
+<svg height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"></path>
+</svg>
+</button>
+<script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_353839a1-f201-4f05-a7e0-d06073dd3f43 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('dominant_sector_state');
+      }
+      })();
+    </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>CA is apart of the states that are energy emission dominated. This informs further investigation into CA-specific emission drivers as I build my model.</p>
 </div>
 </div>
 </div>
@@ -7858,7 +9641,6 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>[NbConvertApp] Converting notebook project.ipynb to html
-[NbConvertApp] Writing 288362 bytes to project.html
 </pre>
 </div>
 </div>
