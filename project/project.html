@@ -7827,7 +7827,7 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Project Goal:</strong></p>
 <p>This project analyzes greenhouse gas emissions across U.S. states and territories using historical emissions inventories and wildfire emissions data. First, I aim to explore long-term trends in emissions across states between 1990 and 2022. Using time-series analysis, I will compare changes in total emissions over time and compare trends across emission sectors such as transportation, energy, and agriculture. I will also identify which sectors drive emissions in each state then use this to predict future state emissions. These analyses will provide a baseline understanding of the major drivers of greenhouse gas emissions across the United States.</p>
-<p>Then, I want to specifically observe California state emissions and wildfire emissions. Despite wildfire emissions being included in each state greenhouse gas inventory, the use of a separate wildfire dataset provides event-level information such as acres burned and emissions per fire. I will compare wildfire emissions against other major emission sectors in California to better understand their relative contribution to total emissions. I intend to use a regression model to predict total California emissions using historical anthropogenic sector emissions and wildfire activity indicators. By comparing model predictions using anthropogenic emissions alone versus models that incorporate wildfire emissions and fire activity metrics, I aim to demonstrate how wildfire activity is increasingly contributing to California greenhouse gas emissions variability.</p>
+<p>Then, I want to specifically observe California state emissions and wildfire emissions. Despite wildfire emissions being included in each state greenhouse gas inventory, the use of a separate wildfire dataset provides event-level information such as acres burned and emissions per fire. I will compare wildfire emissions against other major emission sectors in California to better understand their relative contribution to total emissions. I intend to use a regression model to predict total California emissions using historical anthropogenic sector emissions and wildfire activity indicators. By comparing model predictions using anthropogenic emissions alone versus models that incorporate wildfire emissions and fire activity metrics, I aim to demonstrate how wildfire activity is increasingly contributing to California greenhouse gas emissions variability. Additionally, I aim to answer if the 2020-2021 combined drought and COVID-19 events in California shift the relative contribution of wildfire emissions compared to traditionally dominant industrial sectors.</p>
 <p><strong>Description of Datasets:</strong></p>
 <p>The first dataset I will be using includes individual state and U.S. territory greenhouse gas emissions, grouped by greenhouse gas (Tg) and economic sector. These data range from years 1990-2022. Each row represents one greenhouse gas emission per year includes economic sector and subsectors, UNFCCC-IPCC sector and subsectors, carbon pool, fuel type, greenhouse gas type, and emission per year. This extensive dataset uses governmental language and is meant to inform emissions policies.</p>
 <p>State greenhouse gas emissions data:
@@ -7844,12 +7844,12 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
@@ -7862,15 +7862,30 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
-</pre>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># import required packages</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># modeling</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_validate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -7880,24 +7895,7 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="c1"># import required packages</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># load greenhouse gas dataset</span>
@@ -7915,508 +7913,16 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_145/1544838143.py:2: DtypeWarning: Columns (8,9,10) have mixed types. Specify dtype option on import or set low_memory=False.
-  ghg = pd.read_csv(
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div class="colab-df-container" id="df-372c16f8-69ea-491c-8172-edea7719d6c5">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>sector</th>
-<th>subsector</th>
-<th>category</th>
-<th>sub_category_1</th>
-<th>sub_category_2</th>
-<th>sub_category_3</th>
-<th>sub_category_4</th>
-<th>sub_category_5</th>
-<th>carbon_pool</th>
-<th>fuel1</th>
-<th>...</th>
-<th>Y2013</th>
-<th>Y2014</th>
-<th>Y2015</th>
-<th>Y2016</th>
-<th>Y2017</th>
-<th>Y2018</th>
-<th>Y2019</th>
-<th>Y2020</th>
-<th>Y2021</th>
-<th>Y2022</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-</tr>
-<tr>
-<th>1</th>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>0.005047</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-</tr>
-<tr>
-<th>2</th>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>0.002264</td>
-<td>0.002704</td>
-<td>0.003249</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-</tr>
-<tr>
-<th>3</th>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-</tr>
-<tr>
-<th>4</th>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-</tr>
-</tbody>
-</table>
-<p>5 rows × 49 columns</p>
-</div>
-<div class="colab-df-buttons">
-<div class="colab-df-container">
-<button class="colab-df-convert" onclick="convertToInteractive('df-372c16f8-69ea-491c-8172-edea7719d6c5')" style="display:none;" title="Convert this dataframe to an interactive table.">
-<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
-<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
-</svg>
-</button>
-<style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-<script>
-      const buttonEl =
-        document.querySelector('#df-372c16f8-69ea-491c-8172-edea7719d6c5 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-372c16f8-69ea-491c-8172-edea7719d6c5');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div class="colab-df-container" id="df-8d5cda39-254d-4de7-8481-9455de131bc1">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>Year</th>
-<th>Fire ID</th>
-<th>Fire\nType</th>
-<th>Start\nDate</th>
-<th>End\nDate</th>
-<th>Acres\nBurned</th>
-<th>Total Fuels\nConsumed (tons)</th>
-<th>TOG\n(tons)</th>
-<th>TNMHC\n(tons)</th>
-<th>NO2\n(tons)</th>
-<th>SO2\n(tons)</th>
-<th>CO\n(tons)</th>
-<th>PM10\n(tons)</th>
-<th>PM2.5\n(tons)</th>
-<th>NH3\n(tons)</th>
-<th>CO2\n(tons)</th>
-<th>CH4\n(tons)</th>
-<th>N2O\n(tons)</th>
-<th>Involved Counties</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2015</td>
-<td>TANNER_objectid_3888</td>
-<td>suppression</td>
-<td>1/23/15</td>
-<td>1/24/15</td>
-<td>45.626</td>
-<td>901.527</td>
-<td>41.314</td>
-<td>12.394</td>
-<td>1.396</td>
-<td>0.851</td>
-<td>177.059</td>
-<td>30.656</td>
-<td>25.987</td>
-<td>1.771</td>
-<td>1332.413</td>
-<td>8.263</td>
-<td>0.186</td>
-<td>Placer</td>
-</tr>
-<tr>
-<th>1</th>
-<td>2015</td>
-<td>MCOULLOH_objectid_3898</td>
-<td>suppression</td>
-<td>1/24/15</td>
-<td>3/1/15</td>
-<td>36.250</td>
-<td>737.680</td>
-<td>33.652</td>
-<td>9.982</td>
-<td>1.180</td>
-<td>0.673</td>
-<td>142.605</td>
-<td>25.042</td>
-<td>21.223</td>
-<td>1.426</td>
-<td>1095.129</td>
-<td>6.843</td>
-<td>0.153</td>
-<td>Placer</td>
-</tr>
-<tr>
-<th>2</th>
-<td>2015</td>
-<td>SPRING-GARDEN_objectid_3948</td>
-<td>suppression</td>
-<td>2/6/15</td>
-<td>2/6/15</td>
-<td>16.012</td>
-<td>177.126</td>
-<td>7.755</td>
-<td>2.380</td>
-<td>0.287</td>
-<td>0.177</td>
-<td>34.000</td>
-<td>5.848</td>
-<td>4.961</td>
-<td>0.340</td>
-<td>263.033</td>
-<td>1.497</td>
-<td>0.037</td>
-<td>Plumas</td>
-</tr>
-<tr>
-<th>3</th>
-<td>2015</td>
-<td>VAN-DYKE_000107</td>
-<td>suppression</td>
-<td>2/6/15</td>
-<td>2/13/15</td>
-<td>519.291</td>
-<td>1403.665</td>
-<td>46.451</td>
-<td>13.523</td>
-<td>3.402</td>
-<td>1.117</td>
-<td>193.179</td>
-<td>32.288</td>
-<td>27.368</td>
-<td>1.932</td>
-<td>2211.655</td>
-<td>9.703</td>
-<td>0.308</td>
-<td>Mono</td>
-</tr>
-<tr>
-<th>4</th>
-<td>2015</td>
-<td>ROUND_001662</td>
-<td>suppression</td>
-<td>2/7/15</td>
-<td>2/9/15</td>
-<td>6549.296</td>
-<td>17686.986</td>
-<td>672.723</td>
-<td>200.511</td>
-<td>36.844</td>
-<td>16.054</td>
-<td>2864.439</td>
-<td>479.356</td>
-<td>406.712</td>
-<td>28.644</td>
-<td>27138.610</td>
-<td>135.851</td>
-<td>3.783</td>
-<td>Inyo, Mono</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="colab-df-buttons">
-<div class="colab-df-container">
-<button class="colab-df-convert" onclick="convertToInteractive('df-8d5cda39-254d-4de7-8481-9455de131bc1')" style="display:none;" title="Convert this dataframe to an interactive table.">
-<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
-<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
-</svg>
-</button>
-<style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-<script>
-      const buttonEl =
-        document.querySelector('#df-8d5cda39-254d-4de7-8481-9455de131bc1 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-8d5cda39-254d-4de7-8481-9455de131bc1');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="c1"># find all year columns</span>
+<div class="highlight hl-python"><pre><span></span><span class="c1"># clean greenhouse gas emission data</span>
+<span class="c1"># find all year columns</span>
 <span class="n">year_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ghg</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'Y'</span><span class="p">)]</span>
 
 <span class="c1"># tidy data</span>
@@ -8446,284 +7952,23 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 <span class="c1"># filter for CO2 only</span>
 <span class="n">ghg_long</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="n">ghg_long</span><span class="p">[</span><span class="s1">'ghg'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Carbon Dioxide'</span><span class="p">]</span>
 
+<span class="c1"># subset California (this will be useful later...)</span>
+<span class="n">ca_ghg</span> <span class="o">=</span> <span class="n">ghg_long</span><span class="p">[</span><span class="n">ghg_long</span><span class="p">[</span><span class="s1">'geo_ref'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'CA'</span><span class="p">]</span>
+
 <span class="n">display</span><span class="p">(</span><span class="n">ghg_long</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 <span class="n">display</span><span class="p">(</span><span class="n">ghg_long</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ca_ghg</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div class="colab-df-container" id="df-8d5764f3-aa4b-4448-91d1-ab2355685c39">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>geo_ref</th>
-<th>ghg</th>
-<th>ghg_category</th>
-<th>sector</th>
-<th>subsector</th>
-<th>category</th>
-<th>sub_category_1</th>
-<th>fuel1</th>
-<th>fuel2</th>
-<th>year</th>
-<th>emissions_Tg</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>AK</td>
-<td>Carbon Dioxide</td>
-<td>CO2</td>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1990</td>
-<td>NaN</td>
-</tr>
-<tr>
-<th>1</th>
-<td>AL</td>
-<td>Carbon Dioxide</td>
-<td>CO2</td>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1990</td>
-<td>0.010937</td>
-</tr>
-<tr>
-<th>2</th>
-<td>AR</td>
-<td>Carbon Dioxide</td>
-<td>CO2</td>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1990</td>
-<td>0.005945</td>
-</tr>
-<tr>
-<th>3</th>
-<td>AS</td>
-<td>Carbon Dioxide</td>
-<td>CO2</td>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1990</td>
-<td>NaN</td>
-</tr>
-<tr>
-<th>4</th>
-<td>AZ</td>
-<td>Carbon Dioxide</td>
-<td>CO2</td>
-<td>Agriculture</td>
-<td>CO2 Emissions from Liming, Urea Application an...</td>
-<td>Liming</td>
-<td>Dolomite</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1990</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="colab-df-buttons">
-<div class="colab-df-container">
-<button class="colab-df-convert" onclick="convertToInteractive('df-8d5764f3-aa4b-4448-91d1-ab2355685c39')" style="display:none;" title="Convert this dataframe to an interactive table.">
-<svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
-<path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
-</svg>
-</button>
-<style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-<script>
-      const buttonEl =
-        document.querySelector('#df-8d5764f3-aa4b-4448-91d1-ab2355685c39 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-8d5764f3-aa4b-4448-91d1-ab2355685c39');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>geo_ref</th>
-<td>object</td>
-</tr>
-<tr>
-<th>ghg</th>
-<td>object</td>
-</tr>
-<tr>
-<th>ghg_category</th>
-<td>object</td>
-</tr>
-<tr>
-<th>sector</th>
-<td>object</td>
-</tr>
-<tr>
-<th>subsector</th>
-<td>object</td>
-</tr>
-<tr>
-<th>category</th>
-<td>object</td>
-</tr>
-<tr>
-<th>sub_category_1</th>
-<td>object</td>
-</tr>
-<tr>
-<th>fuel1</th>
-<td>object</td>
-</tr>
-<tr>
-<th>fuel2</th>
-<td>object</td>
-</tr>
-<tr>
-<th>year</th>
-<td>int64</td>
-</tr>
-<tr>
-<th>emissions_Tg</th>
-<td>float64</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> object</label>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># highest emission states ranked</span>
@@ -8741,66 +7986,6 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>emissions_Tg</th>
-</tr>
-<tr>
-<th>geo_ref</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>TX</th>
-<td>633.235314</td>
-</tr>
-<tr>
-<th>CA</th>
-<td>353.892556</td>
-</tr>
-<tr>
-<th>FL</th>
-<td>237.544075</td>
-</tr>
-<tr>
-<th>OH</th>
-<td>234.440988</td>
-</tr>
-<tr>
-<th>PA</th>
-<td>229.824848</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> float64</label>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -8812,12 +7997,12 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># emission change since 1990 per state</span>
@@ -8836,160 +8021,6 @@ Dataset can be downloaded by clicking on "Summary Table" under "Wildfire Emissio
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>emissions_Tg</th>
-</tr>
-<tr>
-<th>geo_ref</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>TX</th>
-<td>133.765261</td>
-</tr>
-<tr>
-<th>FL</th>
-<td>52.878320</td>
-</tr>
-<tr>
-<th>AK</th>
-<td>36.511895</td>
-</tr>
-<tr>
-<th>AR</th>
-<td>31.653348</td>
-</tr>
-<tr>
-<th>National</th>
-<td>30.947326</td>
-</tr>
-<tr>
-<th>CO</th>
-<td>26.818079</td>
-</tr>
-<tr>
-<th>MS</th>
-<td>22.616880</td>
-</tr>
-<tr>
-<th>AZ</th>
-<td>20.840538</td>
-</tr>
-<tr>
-<th>MO</th>
-<td>18.906296</td>
-</tr>
-<tr>
-<th>MN</th>
-<td>14.985571</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> float64</label>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>emissions_Tg</th>
-</tr>
-<tr>
-<th>geo_ref</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>MD</th>
-<td>-17.552479</td>
-</tr>
-<tr>
-<th>WV</th>
-<td>-17.835779</td>
-</tr>
-<tr>
-<th>IL</th>
-<td>-20.474443</td>
-</tr>
-<tr>
-<th>MA</th>
-<td>-27.091614</td>
-</tr>
-<tr>
-<th>MI</th>
-<td>-28.589308</td>
-</tr>
-<tr>
-<th>PA</th>
-<td>-33.012370</td>
-</tr>
-<tr>
-<th>NY</th>
-<td>-37.507267</td>
-</tr>
-<tr>
-<th>CA</th>
-<td>-37.889885</td>
-</tr>
-<tr>
-<th>IN</th>
-<td>-46.142872</td>
-</tr>
-<tr>
-<th>OH</th>
-<td>-54.682378</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> float64</label>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -9002,12 +8033,12 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># sector contributions nationally</span>
@@ -9015,66 +8046,6 @@ The states and territories that show decreases in emissions could reflect change
 
 <span class="n">display</span><span class="p">(</span><span class="n">sector_national</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>emissions_Tg</th>
-</tr>
-<tr>
-<th>sector</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>Agriculture</th>
-<td>256.346786</td>
-</tr>
-<tr>
-<th>Energy</th>
-<td>176107.484617</td>
-</tr>
-<tr>
-<th>Energy-Excluded</th>
-<td>12528.757357</td>
-</tr>
-<tr>
-<th>Industrial Processes and Product Use</th>
-<td>6306.088915</td>
-</tr>
-<tr>
-<th>Land Use, Land-Use Change and Forestry</th>
-<td>-32846.706024</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> float64</label>
 </div>
 </div>
 </div>
@@ -9090,12 +8061,12 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># and by state</span>
@@ -9114,58 +8085,6 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>count</th>
-</tr>
-<tr>
-<th>sector</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>Energy</th>
-<td>58</td>
-</tr>
-<tr>
-<th>Industrial Processes and Product Use</th>
-<td>4</td>
-</tr>
-<tr>
-<th>Land Use, Land-Use Change and Forestry</th>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> int64</label>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -9177,12 +8096,12 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># plot the sector counts</span>
@@ -9209,19 +8128,6 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
-<img alt="No description has been provided for this image" class="" src="data:image/png;base64,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oqOj5evrq+nTp6tevXqaP3++GjZsqEKFCumDDz5Qz5491aRJE9WrV083btxQ69atVbBgQQ0aNCjZOm7duqVq1arp9OnTio6OVlBQkL766iutXbs20bBr165V7dq1FR4erv79+ytTpkyaOnWqqlatqk2bNqlMmTKPXe6bN2/q4sWLibp7e3vbHQ06duyYXnnlFXXo0EGvvvqqRowYobp162rixIl677331LFjR0nS0KFD1bRp00eelv/zzz/rxRdfVLFixTRo0CA5Ozvr2LFjdj8WTJ48WdHR0WrSpIm6dOmiv/76S3v37tW2bdseeQnEgAEDNHDgQFWvXl1vvvmmDh8+rAkTJmj79u3avHmz3Q9Oly9fVq1atdSoUSM1bdpU8+fPV69evVS0aFHVrl072XkEBwdLkmbOnKkKFSo88qjZ+fPnVa5cOfPHND8/P33//fdq27atrl27pq5du0q6v12/+OKLWrNmjV5++WV16dJF169f16pVq7R//35Vr15dEyZM0JtvvqmGDRuqUaNGkmReapPa/eBLL72kkJAQDRkyRIZhJFt/gs6dO8vb21sDBgww1+mpU6fMa3RbtGihL7/8UitWrDB/vJOk33//XWvXrlX//v2TnXb27Nnl6uqqb775Rm+99ZZ8fHySHK5QoUIaNGiQ+vXrp/bt26tSpUqSpPLly0u6/8PdzZs39eabb8rX11c//fSTPv30U/3666+aN2+eJKlDhw46e/asVq1aleg054T+Cfuj6OhonThxQp999pl2796daPt52KpVq/TLL7+oTZs2CggI0M8//6xJkybp559/1o8//pjoh6emTZsqd+7cGjp0qHbt2qUpU6Yoe/bsdmfatGvXTjNmzNArr7yi8uXLa+3atcnum6yQ0rZJTzdv3lRERIR+++03dejQQc8++6y2bNmi3r1769y5cxo9erTd8En9/0mQku38q6++Urt27VSmTBm1b99ekpQ3b15J9/dVlSpVkqenp9555x1lzpxZn3/+uapUqaINGzaobNmydtPq2LGj/Pz81K9fP924cUNVqlRRzpw5NXPmTDVs2NBu2JkzZypv3rx67rnn/u4qy3gGAOCpMnXqVEOSsX379mSH8fLyMsLCwsz3JUqUMLJnz25cunTJ7LZnzx4jU6ZMRsuWLc1u/fv3NyQZ7du3N7vdu3fPyJEjh2Gz2Yxh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CxaYZ1E86ME2aty4sS5evJjk0a+EZXFzczPn86B/Yj84adIku/U+YcIE3bt3L9Fd3qOiomSz2dSlSxf98ssvKbpm9ebNm8nuW77//ntJ/3dKdXL7vaT2WYZhaMyYMYmmmdw0mjZtqri4OH3wwQeJxrl3794j97VJzV9Sojttp0bCuh07dmyappmwXcyYMSNR7Tt37tSPP/6YqP1Onz5t/oAopa5tpPthNKnPRmo0bdpUW7du1YoVKxL1u3LlSpL/v/4ud3f3JLepmjVrasmSJXaXUZw/f15ff/21Klas+Mj/FQ/Kli2bateurRkzZmjmzJmqVatWokvanmYc6QaAp9T333+vQ4cO6d69ezp//rzWrl2rVatWKTg4WEuXLrU7yvXxxx+rdu3aeu6559S2bVvzUTleXl52z7DNSHXq1NEnn3yiWrVq6ZVXXtGFCxc0btw45cuXT3v37k3TNMPDwyVJffr00csvv6zMmTOrbt26yR7Ratasmfbt26fBgwdr9+7dioqKUnBwsC5duqTly5drzZo15qnuL774ohYuXKiGDRuqTp06OnHihCZOnKjChQsnGfAexcfHRxUrVlSbNm10/vx5jR49Wvny5TMf+ZY5c2Z99NFHatOmjSIiIhQVFWU+MixXrlzq1q1bmtZPcq5evWo+5/3mzZs6duyYFi5cqOPHj+vll19O8gv3g959913NmjVLtWvXVnR0tHx8fDR9+nSdOHFCCxYsUKZMmWQYhl577TW5urpqwoQJku4/imjBggXq0qWLqlevrqCgoCSn//rrr+uzzz5Ty5YttXPnTgUGBuqrr74yA1eCTJkyacqUKapdu7ZCQ0PVpk0bPfPMM/rtt9+0bt06eXp66ptvvnns+ti1a1ei595LsvRRNoMGDdLGjRtVp04dBQcH68KFCxo/frxy5MhhnmVQs2ZNBQQEqEKFCvL399fBgwf12WefqU6dOslec+/n56fevXtr4MCBqlWrlurVq6fDhw9r/PjxKl26dLrdtGjPnj165ZVXVLt2bVWqVEk+Pj767bffNH36dJ09e1ajR482Q9iwYcO0bt06lS1bVq+//roKFy6sP//8U7t27dLq1avNHyBatmypL7/8Ut27d9dPP/2kSpUq6caNG1q9erU6duyo+vXry9XVVYULF9acOXOUP39++fj4qEiRIipSpIjl+8E7d+6o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AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALCIY0YXAABPov0DI+Xp6ZnRZQAAAOApx5FuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAijhldAAA8iYr0X6FMzm4ZXcZjnRxWJ6NLAAAAwCNwpBsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACL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9kiSduzYoejoaH311VcqX768/vzzT23atMmsdejQoZoxY4YmTpyokJAQbdy4Ua+++qr8/PwUERGhvn376sCBA/r++++VLVs2HTt2TLdu3Up2fdy4cUPdu3dXsWLFFBsbq379+qlhw4aKiYlRpkz/9xtWnz59NGLECIWEhKhPnz6KiorSsWPH5OjoqG3btqlt27YaOnSoGjRooOXLl6t///7p0jYDBgzQsGHDNHr0aDk6OmrRokXq0qWLRo8ererVq2vZsmVq06aNcuTIoeeffz7dtuuYmBhVq1ZNr732msaMGSNHR0etW7dOcXFxGjNmjI4cOaIiRYpo0KBBkiQ/P79UzyPBuXPnFBUVpeHDh6thw4a6fv26Nm3aZF72MnPmTPXr10+fffaZwsLCtHv3br3++utyd3dXq1at0jzfp8Xs2bO1a9cubd++PaNLAQAAgNJ49/J169aldx1PhGLFipnhJyQkRJ999pnWrFmjGjVqaPXq1Tp06JBWrFihoKAgSdKQIUNSfU316dOn1bhxYxUtWlSS7E4L9vHxkSRlz5490ancISEhGj58+COn/f7775t/58qVSz169NDs2bPTHLqvXLmiDz74QB4eHipTpowZRrt27apGjRqZw40YMUK9evXSyy+/LEn66KOPtG7dOo0ePVrjxo3T119/rT/++EPbt283lzFfvnzm+AMHDtS7775rBqI8efLogw8+0DvvvKP+/fvr9OnTCggIUPXq1ZU5c2Y9++yzKlOmjKT769Pd3V0vvviismTJouDgYIWFhUm6f4+BIUOGaPXq1XruuefMaf/www/6/PPPFRERodOnTyssLEylSpUy19ujNG7c2O79F198IT8/Px04cEBFihQxu/fo0UN16tQxly80NFTHjh1TwYIFNWbMGNWqVctsl/z582vLli2Jzg54lJs3b+r999+Xg4ODIiIizO6vvPKK2rRpY76PiopS69at1bFjR0lS9+7d9eOPP2rEiBF6/vnn0227Hj58uEqVKmV3RDk0NNT828nJSW5ubulyScS5c+d07949NWrUSMHBwZJkfp6k+z/UjBw50txGc+fOrQMHDujzzz9PMnTfvn1bt2/fNt9fu3btb9eYUc6cOaMuXbpo1apVcnFxyehyAAAAoL/xnO6PPvooUffhw4frpZde+ttFZZSHbzgUGBho3qX94MGDypkz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0qVL8vPzU8WKFfXjjz/Kz89PkvTdd9/p3XffVd26dRUbG6t8+fJp+vTpeuGFFyyridANINVu376t33//3a6bo6Oj3TMQk9OpUydNnjxZUVFReuedd+Tj46Njx45p9uzZmjJlihwcHJIcr0OHDvrkk0/Uq1cvtW3bVjExMZo2bZok2R3Jzpo1qxo1aqSePXuqZs2aypEjR9oXFAAAAE+V2bNnP7J/SEiIFixY8A9Vcx/XdANIteXLlyswMNDuVbFixRSNGxQUpM2bNysuLk41a9ZU0aJF1bVrV3l7eye6vuZBuXPn1vz587Vw4UIVK1ZMEyZMMO9e/vDp4W3bttWdO3f02muvpX0hAQAAgHRgMwzDyOgiACAtBg8erIkTJya6+dlXX32lbt266ezZs3JyckrVNK9duyYvLy/l7DpXmZzd0rNcAAAAWODksDoZMt+E741Xr16Vp6dnssNxejmAp8b48eNVunRp+fr6avPmzfr444/VuXNns//Nmzd17tw5DRs2TB06dEh14AYAAADSG6eXA3hqHD16VPXr11fhwoX1wQcf6O2339aAAQPM/sOHD1fBggUVEBCg3r17Z1yhAAAAwP/H6eUA8ABOLwcAAHi6POmnl3OkGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwiGNGFwAAT6L9AyPl6emZ0WUAAADgKceRbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAs4pjRBQDAk8QwDEnStWvXMrgSAAAAPMkSvi8mfH9MDqEbAB5w6dIlSVLOnDkzuBIAAAA8Da5fvy4vL69k+xO6AeABPj4+kqTTp08/cueJjHft2jXlzJlTZ86ckaenZ0aXg8egvZ4etNXThfZ6etBWT4+UtpVhGLp+/bqCgoIeOT1CNwA8IFOm+7e68PLy4h/iU8LT05O2eorQXk8P2urpQns9PWirp0dK2iolB2m4kRoAAAAAABYhdAMAAAAAYBFCNwA8wNnZWf3795ezs3NGl4LHoK2eLrTX04O2errQXk8P2urpkd5tZTMed39zAAAAAACQJhzpBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AeMC4ceOUK1cuubi4qGzZsvrpp58yuqT/vI0bN6pu3boKCgqSzWbT4sWL7fobhqF+/fopMDBQrq6uql69uo4ePZoxxf7HDR06VKVLl1aWLFmUPXt2NWjQQIcPH7Yb5q+//lKnTp3k6+srDw8PNW7cWOfPn8+giv+7JkyYoGLFipnPoH3uuef0/fffm/1ppyfbsGHDZLPZ1LVrV7MbbfZkGDBggGw2m92rYMGCZn/a6cnz22+/6dVXX5Wvr69cXV1VtGhR7dixw+yfHt8zCN0A8P/NmTNH3bt3V//+/bVr1y4VL15ckZGRunDhQkaX9p9248YNFS9eXOPGjUuy//DhwzV27FhNnDhR27Ztk7u7uyIjI/XXX3/9w5Viw4YN6tSpk3788UetWrVKd+/eVc2aNXXjxg1zmG7duumbb77RvHnztGHDBp09e1aNGjXKwKr/m3LkyKFhw4Zp586d2rFjh6pWrar69evr559/lkQ7Pcm2b9+uzz//XMWKFbPrTps9OUJDQ3Xu3Dnz9cMPP5j9aKcny+XLl1WhQgVlzpxZ33//vQ4cOKCRI0cqa9as5jDp8j3DAAAYhmEYZcqUMTp16mS+j4uLM4KCgoyhQ4dmYFV4kCRj0aJF5vv4+HgjICDA+Pjjj81uV65cMZydnY1Zs2ZlQIV40IULFwxJxoYNGwzDuN82mTNnNubNm2cOc/DgQUOSsXXr1owqE/9f1qxZjSlTptBOT7Dr168bISEhxqpVq4yIiAijS5cuhmHw2XqS9O/f3yhevHiS/WinJ0+vXr2MihUrJts/vb5ncKQbACTduXNHO3fuVPXq1c1umTJlUvXq1bV169YMrAyPcuLECf3+++927ebl5aWyZcvSbk+Aq1evSpJ8fHwkSTt37tTdu3ft2qtgwYJ69tlnaa8MFBcXp9mzZ+vGjRt67rnnaKcnWKdOnVSnTh27tpH4bD1pjh49qqCgIOXJk0fNmzfX6dOnJdFOT6KlS5eqVKlSeumll5Q9e3aFhYVp8uTJZv/0+p5B6AYASRcvXlRcXJz8/f3tuvv7++v333/PoKrwOAltQ7s9eeLj49W1a1dVqFBBRYoUkXS/vZycnOTt7W03LO2VMfbt2ycPDw85OzvrjTfe0KJFi1S4cGHa6Qk1e/Zs7dq1S0OHDk3UjzZ7cpQtW1bTpk3T8uXLNWHCBJ04cUKVKlXS9evXaacn0C+//KIJEyYoJCREK1as0Jtvvqno6GhNnz5dUvp9z3BMv5IBAADu69Spk/bv3293LSOeLAUKFFBMTIyuXr2q+fPnq1WrVtqwYUNGl4UknDlzRl26dNGqVavk4uKS0eXgEWrXrm3+XaxYMZUtW1bBwcGaO3euXF1dM7AyJCU+Pl6lSpXSkCFDJElhYWHav3+/Jk6cqFatWqXbfDjSDQCSsmXLJgcHh0R3ED1//rwCAgIyqCo8TkLb0G5Pls6dO2vZsmVat26dcuTIYXYPCAjQnTt3dOXKFbvhaa+M4eTkpHz58ik8PFxDhw5V8eLFNWbMGNrpCbRz505duHBBJUuWlKOjoxwdHbVhwwaNHTtWjo6O8vf3p82eUN7e3sqfP7+OHTvGZ+sJFBgYqMKFC9t1K1SokHlJQHp9zyB0A4Duf/kMDw/XmjVrzG7x8fFas2aNnnvuuQysDI+SO3duBQQE2LXbtWvXtG3bNtotAxiGoc6dO2vRokVau3atcufObdc/PDxcmTNntmuvw4cP6/Tp07TXEyA+Pl63b9+mnZ5A1apV0759+xQTE2O+SpUqpebNm5t/02ZPptjYWB0/flyBgYF8tp5AFSpUSPRoyyNHjig4OFhS+n3P4PRyAPj/unfvrlatWqlUqVIqU6aMRo8erRs3bqhNmzYZXdp/WmxsrI4dO2a+P3HihGJiYuTj46Nnn31WXbt21YcffqiQkBDlzp1bffv2VVBQkBo0aJBxRf9HderUSV9//bWWLFmiLFmymNe7eXl5ydXVVV5eXmrbtq26d+8uHx8feXp66q233tJzzz2ncuXKZXD1/y29e/dW7dq19eyzz+r69ev6+uuvtX79eq1YsYJ2egJlyZLFvDdCAnd3d/n6+prdabMnQ48ePVS3bl0FBwfr7Nmz6t+/vxwcHBQVFcVn6wnUrVs3lS9fXkOGDFHTpk31008/adKkSZo0aZIkyWazpc/3jL9zi3UA+Lf59NNPjWeffdZwcnIyypQpY/z4448ZXdJ/3rp16wxJiV6tWrUyDOP+4zz69u1r+Pv7G87Ozka1atWMw4cPZ2zR/1FJtZMkY+rUqeYwt27dMjp27GhkzZrVcHNzMxo2bGicO3cu44r+j3rttdeM4OBgw8nJyfDz8zOqVatmrFy50uxPOz35HnxkmGHQZk+KZs2aGYGBgYaTk5PxzDPPGM2aNTOOHTtm9qednjzffPONUaRIEcPZ2dkoWLCgMWnSJLv+6fE9w2YYhpGOPxYAAAAAAID/j2u6AQAAAACwCKEbAAAAAACLELoBAAAAALAIoRsAAAAAAIsQugEAAAAAsAihGwAAAAAAixC6AQAAAACwCKEbAAAAAACLELoBAACeQidPnpTNZlNMTExGl2I6dOiQypUrJxcXF5UoUSKjywGAJwKhGwAAIA1at24tm82mYcOG2XVfvHixbDZbBlWVsfr37y93d3cdPnxYa9asSXKYP/74Q2+++aaeffZZOTs7KyAgQJGRkdq8ebM5jM1m0+LFi1M9/1y5cmn06NFprB4ArEHoBgAASCMXFxd99NFHunz5ckaXkm7u3LmT5nGPHz+uihUrKjg4WL6+vkkO07hxY+3evVvTp0/XkSNHtHTpUlWpUkWXLl1K83wB4ElG6AYAAEij6tWrKyAgQEOHDk12mAEDBiQ61Xr06NHKlSuX+b5169Zq0KCBhgwZIn9/f3l7e2vQoEG6d++eevbsKR8fH+XIkUNTp05NNP1Dhw6pfPnycnFxUZEiRbRhwwa7/vv371ft2rXl4eEhf39/tWjRQhcvXjT7V6lSRZ07d1bXrl2VLVs2RUZGJrkc8fHxGjRokHLkyCFnZ2eVKFFCy5cvN/vbbDbt3LlTgwYNks1m04ABAxJN48qVK9q0aZM++ugjPf/88woODlaZMmXUu3dv1atXT5LM9dKwYUPZbDbz/fHjx1W/fn35+/vLw8NDpUuX1urVq+2W49SpU+rWrZtsNpvd2QY//PCDKlWqJFdXV+XMmVPR0dG6ceOG2X/8+PEKCQmRi4uL/P391aRJkyTXAQCkBaEbAAAgjRwcHDRkyBB9+umn+vXXX//WtNauXauzZ89q48aN+uSTT9S/f3+9+OKLypo1q7Zt26Y33nhDHTp0SDSfnj176u2339bu3bv13HPPqW7duuZR4ytXrqhq1aoKCwvTjh07tHz5cp0/f15Nmza1m8b06dPl5OSkzZs3a+LEiUnWN2bMGI0cOVIjRozQ3r17FRkZqXr16uno0aOSpHPnzik0NFRvv/22zp07px49eiSahoeHhzw8PLR48WLdvn07yfls375dkjR16lSdO3fOfB8bG6sXXnhBa9as0e7du1WrVi3VrVtXp0+fliQtXLhQOXLk0KBBg3Tu3DmdO3dO0v2wXqtWLTVu3Fh79+7VnDlz9MMPP6hz586SpB07dig6OlqDBg3S4cOHtXz5clWuXPnxDQYAKWUAAAAg1Vq1amXUr1/fMAzDKFeunPHaa68ZhmEYixYtMh78itW/f3+jePHiduOOGjXKCA4OtptWcHCwERcXZ3YrUKCAUalSJfP9vXv3DHd3d2PWrFmGYRjGiRMnDEnGsGHDzGHu3r1r5MiRw/joo48MwzCMDz74wKhZs6bdvM+cOWNIMg4fPmwYhmFEREQYYWFhj13eoKAgY/DgwXbdSpcubXTs2NF8X7x4caN///6PnM78+fONrFmzGi4uLkb58uWN3r17G3v27LEbRpKxaNGix9YUGhpqfPrpp+b74OBgY9SoUXbDtG3b1mjfvr1dt02bNhmZMmUybt26ZSxYsMDw9PQ0rl279tj5AUBacKQbAADgb/roo480ffp0HTx4MM3TCA0NVaZM//fVzN/fX0WLFjXfOzg4yNfXVxcuXLAb77nnnjP/dnR0VKlSpcw69uzZo3Xr1plHmD08PFSwYEFJ948AJwgPD39kbdeuXdPZs2dVoUIFu+4VKlRI9TI3btxYZ8+e1dKlS1WrVi2tX79eJUuW1LRp0x45XmxsrHr06KFChQrJ29tbHh4eOnjwoHmkOzl79uzRtGnT7NZBZGSk4uPjdeLECdWoUUPBwcHKkyePWrRooZkzZ+rmzZupWiYAeBRCNwAAwN9UuXJlRUZGqnfv3on6ZcqUSYZh2HW7e/duouEyZ85s995msyXZLT4+PsV1xcbGqm7duoqJibF7HT161O4Uand39xRPMz24uLioRo0a6tu3r7Zs2aLWrVurf//+jxynR48eWrRokYYMGaJNmzYpJiZGRYsWfeyN32JjY9WhQwe75d+zZ4+OHj2qvHnzKkuWLNq1a5dmzZqlwMBA9evXT8WLF9eVK1fScYkB/JcRugEAANLBsGHD9M0332jr1q123f38/PT777/bBe/0fLb2jz/+aP5979497dy5U4UKFZIklSxZUj///LNy5cqlfPny2b1SE7Q9PT0VFBRk91gvSdq8ebMKFy78t5ehcOHCdjc2y5w5s+Li4hLNq3Xr1mrYsKGKFi2qgIAAnTx50m4YJyenROOVLFlSBw4cSLT8+fLlk5OTk6T7ZwhUr15dw4cP1969e3Xy5EmtXbv2by8XAEiEbgAAgHRRtGhRNW/eXGPHjrXrXqVKFf3xxx8aPny4jh8/rnHjxun7779Pt/mOGzdOixYt0qFDh9SpUyddvnxZr732miSpU6dO+vPPPxUVFaXt27fr+PHjWrFihdq0aZMonD5Oz5499dFHH2nOnDk6fPiw3n33XcXExKhLly4pnsalS5dUtWpVzZgxQ3v37tWJEyc0b948DR8+XPXr1zeHy5Url9asWaPff//dfBxbSEiIFi5caB6pfuWVVxId9c+VK5c2btyo3377zbxDe69evbRlyxZ17tzZPMq/ZMkS80Zqy5Yt09ixYxUTE6NTp07pyy+/VHx8vAoUKJCq9QMAySF0AwAApJNBgwYlCoKFChXS+PHjNW7cOBUvXlw//fRTknf2Tqthw4Zp2LBhKl68uH744QctXbpU2bJlkyTz6HRcXJxq1qypokWLqmvXrvL29ra7fjwloqOj1b17d7399tsqWrSoli9frqVLlyokJCTF0/Dw8FDZsmU1atQoVa5cWUWKFFHfvn31+uuv67PPPjOHGzlypFatWqWcOXMqLCxMkvTJJ58oa9asKl++vOrWravIyEiVLFnSbvqDBg3SyZMnlTdvXvn5+UmSihUrpg0bNujIkSOqVKmSwsLC1K9fPwUFBUmSvL29tXDhQlWtWlWFChXSxIkTNWvWLIWGhqZq/QBAcmzGwxcZAQAAAACAdMGRbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCKEbgAAAAAALELoBgAAAADAIoRuAAAAAAAsQugGAAAAAMAihG4AAAAAACxC6AYAAAAAwCL/DwWicivnu9IXAAAAAElFTkSuQmCC
-"/>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -9233,12 +8139,12 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="c1"># sector contributions for California</span>
@@ -9252,62 +8158,143 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>CA is apart of the states that are energy emission dominated. Filtering for CA  informs further investigation into CA-specific emission drivers as I build my model. As I work with my data, I will merge the datasets and add wildfires to this as well to compare wildfire emissions over time as well.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># now clean wildfire data</span>
+<span class="c1"># fix column names</span>
+<span class="n">fires</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">fires</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+<span class="c1"># year must be numeric</span>
+<span class="n">fires</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fires</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>emissions_Tg</th>
-</tr>
-<tr>
-<th>sector</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>Agriculture</th>
-<td>4.122291</td>
-</tr>
-<tr>
-<th>Energy</th>
-<td>11392.693052</td>
-</tr>
-<tr>
-<th>Energy-Excluded</th>
-<td>1228.314445</td>
-</tr>
-<tr>
-<th>Industrial Processes and Product Use</th>
-<td>295.289987</td>
-</tr>
-<tr>
-<th>Land Use, Land-Use Change and Forestry</th>
-<td>-1241.965424</td>
-</tr>
-</tbody>
-</table>
-</div><br/><label><b>dtype:</b> float64</label>
+<span class="c1"># aggregate wildfire data by year</span>
+<span class="n">fires_yearly</span> <span class="o">=</span> <span class="n">fires</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'year'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">'acres_burned'</span><span class="p">:</span> <span class="s1">'sum'</span><span class="p">,</span>
+    <span class="s1">'co2_(tons)'</span><span class="p">:</span> <span class="s1">'sum'</span>
+<span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># rename</span>
+<span class="n">fires_yearly</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">'co2_(tons)'</span><span class="p">:</span> <span class="s1">'wildfire_co2_ton'</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># convert tons to teragrams and drop extra column</span>
+<span class="n">fires_yearly</span><span class="p">[</span><span class="s1">'wildfire_co2_tg'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fires_yearly</span><span class="p">[</span><span class="s1">'wildfire_co2_ton'</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-6</span>
+<span class="n">fires_yearly</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'wildfire_co2_ton'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">fires_yearly</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">fires_yearly</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># combine data sets by adding wildfire as a sector and applying only the valid years (where wildfire years = ghg years)</span>
+<span class="c1"># get valid years</span>
+<span class="n">valid_years</span> <span class="o">=</span> <span class="n">ca_ghg</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="c1"># keep only wildfire years that exist in ca_ghg</span>
+<span class="n">fires_yearly</span> <span class="o">=</span> <span class="n">fires_yearly</span><span class="p">[</span><span class="n">fires_yearly</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">valid_years</span><span class="p">)]</span>
+
+<span class="c1"># add sector label</span>
+<span class="n">fires_yearly</span><span class="p">[</span><span class="s1">'sector'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Wildfire'</span>
+
+<span class="c1"># rename emissions column</span>
+<span class="n">fires_yearly</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'wildfire_co2_tg'</span><span class="p">:</span> <span class="s1">'emissions_Tg'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># keep only needed columns</span>
+<span class="n">fires_yearly</span> <span class="o">=</span> <span class="n">fires_yearly</span><span class="p">[[</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'sector'</span><span class="p">,</span> <span class="s1">'emissions_Tg'</span><span class="p">]]</span>
+
+<span class="c1"># keep only matching columns</span>
+<span class="n">ca_ghg_subset</span> <span class="o">=</span> <span class="n">ca_ghg</span><span class="p">[[</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'sector'</span><span class="p">,</span> <span class="s1">'emissions_Tg'</span><span class="p">]]</span>
+
+<span class="c1">#combine datasets</span>
+<span class="n">ca_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ca_ghg_subset</span><span class="p">,</span> <span class="n">fires_yearly</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="c1"># aggregate to ensure one value per year-sector pair</span>
+<span class="n">ca_combined</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ca_combined</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'sector'</span><span class="p">])[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">ca_combined</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ca_combined</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+<span class="c1"># check for missing values</span>
+<span class="n">ca_combined</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># check year coverage</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Year range:"</span><span class="p">,</span> <span class="n">ca_combined</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="s2">"-"</span><span class="p">,</span> <span class="n">ca_combined</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c1"># check sectors</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ca_combined</span><span class="p">[</span><span class="s1">'sector'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># plot all emissions combined per year</span>
+<span class="n">ca_total</span> <span class="o">=</span> <span class="n">ca_combined</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'year'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ca_total</span><span class="p">[</span><span class="s1">'year'</span><span class="p">],</span> <span class="n">ca_total</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Total California Greenhouse Gas Emissions (All Sectors + Wildfire)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"CO2 Emissions (Tg)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># summary table of central tendancy</span>
+<span class="n">sector_stats</span> <span class="o">=</span> <span class="n">ca_combined</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'sector'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'max'</span><span class="p">,</span> <span class="s1">'min'</span><span class="p">])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'mean'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Summary Statistics by Sector (Tg):"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sector_stats</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -9319,7 +8306,325 @@ The states and territories that show decreases in emissions could reflect change
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>CA is apart of the states that are energy emission dominated. Filtering for CA  informs further investigation into CA-specific emission drivers as I build my model. As I work with my data, I will merge the datasets and add wildfires to this as well to compare wildfire emissions over time as well.</p>
+<p>Energy contributes the most carbon dioxide emissions on average in California comparatively to other emissions sources.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># create the total aggregation (your current code)</span>
+<span class="n">ca_total</span> <span class="o">=</span> <span class="n">ca_combined</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'year'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1">#plot individual sectors using the long-format ca_combined</span>
+<span class="c1"># We use a lower alpha (transparency) so they don't drown out the total</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ca_combined</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'emissions_Tg'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">'sector'</span><span class="p">,</span>
+             <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># plot the total emissinos line on top</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ca_total</span><span class="p">[</span><span class="s1">'year'</span><span class="p">],</span> <span class="n">ca_total</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span>
+         <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Total California Emissions'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"California Emissions: Sector Breakdown vs. Total (1990-2022)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Year"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"CO2 Emissions (Tg)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This graph is a great representation of how California emissions are so greatly affected by energy usage, but when the variability of the wildfire dataset is introduced in 2015, it causes total California emissions to vary greatly from the energy trend.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># filter for overlap period</span>
+<span class="n">overlap_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ca_combined</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2015</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ca_combined</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2022</span><span class="p">)</span>
+<span class="n">ca_overlap</span> <span class="o">=</span> <span class="n">ca_combined</span><span class="p">[</span><span class="n">overlap_mask</span><span class="p">]</span>
+
+<span class="c1"># calculate total for this time and plot sectors</span>
+<span class="n">ca_total_overlap</span> <span class="o">=</span> <span class="n">ca_overlap</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'year'</span><span class="p">)[</span><span class="s1">'emissions_Tg'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ca_overlap</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'emissions_Tg'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">'sector'</span><span class="p">,</span>
+             <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="c1"># plot total emissions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ca_total_overlap</span><span class="p">[</span><span class="s1">'year'</span><span class="p">],</span> <span class="n">ca_total_overlap</span><span class="p">[</span><span class="s1">'emissions_Tg'</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span>
+         <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Total California Emissions'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1"># formatting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"California Emissions by Sector (2015-2022)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Year"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"CO2 Emissions (Tg)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2023</span><span class="p">))</span> <span class="c1"># Ensure every year shows up</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># highlight covid years</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'yellow'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'COVID/Drought Peak'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Zooming in on just 2015-2022, where the sectors dataset overlaps with the wildfire dataset, we can see how greatly the effect of wildfires is felt during the COVID-19 pandemic (highlighted in yellow), when less energy was used and drought was high.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># time for the model!</span>
+<span class="c1"># pivot sectors into features (X) and sum them for the target (y)</span>
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">ca_combined</span><span class="p">[</span><span class="n">overlap_mask</span><span class="p">]</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'sector'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'emissions_Tg'</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_dict</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">"records"</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># initializing tools</span>
+<span class="n">vec</span> <span class="o">=</span> <span class="n">DictVectorizer</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="c1"># hyperparameter tuning</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_cv_error</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"vectorizer"</span><span class="p">,</span> <span class="n">vec</span><span class="p">),</span> <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">scaler</span><span class="p">),</span> <span class="p">(</span><span class="s2">"fit"</span><span class="p">,</span> <span class="n">model</span><span class="p">)])</span>
+    <span class="c1"># We use cv=3 due to the small sample size (n=8)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="o">-</span><span class="n">cross_validate</span><span class="p">(</span>
+        <span class="n">pipeline</span><span class="p">,</span> <span class="n">X_dict</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+        <span class="n">cv</span><span class="o">=</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+        <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span>
+    <span class="p">)[</span><span class="s2">"test_score"</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">mse</span>
+
+<span class="c1"># test k values from 1 to 5</span>
+<span class="n">ks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">test_errs</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_cv_error</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">test_errs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Model Tuning: MSE vs. k Neighbors"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"k"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Mean Squared Error"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">best_k</span> <span class="o">=</span> <span class="n">test_errs</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Optimal k discovered: </span><span class="si">{</span><span class="n">best_k</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>A 1-NN model is not great and subject to overfitting. This is very likely the result of a small dataset, which is why is becomes prone to overfitting.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># beta/effect size calculations</span>
+<span class="c1"># use linear regression to calculate effect</span>
+<span class="n">lr_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lr_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"vectorizer"</span><span class="p">,</span> <span class="n">vec</span><span class="p">),</span> <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">scaler</span><span class="p">),</span> <span class="p">(</span><span class="s2">"fit"</span><span class="p">,</span> <span class="n">lr_model</span><span class="p">)])</span>
+<span class="n">lr_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_dict</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># extract coefficients from the 'fit' step of the pipeline</span>
+<span class="c1"># standardize the data</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">lr_pipeline</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">'fit'</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">lr_pipeline</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">'vectorizer'</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+
+<span class="n">effect_sizes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">effect_sizes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">'barh'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'royalblue'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Inference: Standardized Effect Sizes (Beta) by Sector"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Effect Size (Change in Total Emissions per Std Dev)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>While all data is measured in Teragrams, I standardized the features to compare the relative influence of each sector. This allowed me to see which sector’s fluctuations, more than just total volume, are most responsible for the changes in California's total emissions.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># plot actual vs predicted to assess the model</span>
+<span class="n">knn_final</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">best_k</span><span class="p">)</span>
+<span class="n">knn_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"vectorizer"</span><span class="p">,</span> <span class="n">vec</span><span class="p">),</span> <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">scaler</span><span class="p">),</span> <span class="p">(</span><span class="s2">"fit"</span><span class="p">,</span> <span class="n">knn_final</span><span class="p">)])</span>
+
+<span class="c1"># plot</span>
+<span class="n">knn_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_dict</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">knn_pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_dict</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'k-NN (k=</span><span class="si">{</span><span class="n">best_k</span><span class="si">}</span><span class="s1">) Predictions'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="s1">'k--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Perfect Prediction"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"3-NN Model Performance: Actual vs. Predicted"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Actual Total Emissions (Tg)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Predicted Total Emissions (Tg)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Just as expected, overfitting occured with the 1-NN model. Based on the MSE vs K-NN figure, we see the next best option is a 3-NN model.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># setup the 3-NN pipeline</span>
+<span class="n">vec</span> <span class="o">=</span> <span class="n">DictVectorizer</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">model_3nn</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">pipeline_3nn</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">"vectorizer"</span><span class="p">,</span> <span class="n">vec</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">scaler</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"fit"</span><span class="p">,</span> <span class="n">model_3nn</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># 3-fold cross-validation</span>
+<span class="n">cv_results_3nn</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">pipeline_3nn</span><span class="p">,</span> <span class="n">X_dict</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
+    <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># calc MSE</span>
+<span class="n">train_mse_3nn</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results_3nn</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">test_mse_3nn</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results_3nn</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--- 3-NN Model Results ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Training MSE: </span><span class="si">{</span><span class="n">train_mse_3nn</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Validation (Test) MSE: </span><span class="si">{</span><span class="n">test_mse_3nn</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">pipeline_3nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_dict</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">preds_3nn</span> <span class="o">=</span> <span class="n">pipeline_3nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_dict</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds_3nn</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkviolet'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'3-NN Predictions'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="s1">'k--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Perfect Fit Line'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Model Demonstration: 3-Nearest Neighbors Performance"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Actual Emissions (Tg)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Predicted Emissions (Tg)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>By using k=3, I reduce the impact of outliers. If one year had a massive wildfire spike (such as 2020 and 2021), a 1-NN model would predict a spike for any year that looks even slightly similar with other sector emissions. The 3-NN model will look at other surrounding data points first. Additionally, moving from k=1 to k=3 will reduce variance even if it slightly increases the distance between points as it will mitigate overfitting. Still not perfect, but better than an overfit model.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>I would really appreciate some feedback on how I went about the model and questions to answer. I was also considering trying to predict change in sector effect size over time, but I was struggling with how best to do this since the dataset is so limited in length!</p>
 </div>
 </div>
 </div>
